@@ -1,0 +1,23 @@
+傳統語音辨識架構：
+預錄的語音命令，在取得輸入語音後，兩者進行一次端點偵測並計算兩者的MFCC。
+再拿兩者的MFCC做DTW比對。
+端點偵測方法：
+(1)
+以音量進行偵測，只要音量小於某個閥值，就當成雜訊
+
+(2)
+複雜的聲學模型來進行，語音的特徵還是 MFCC，但是要使用不同的聲學模型來代表不同的音色，並根據此聲學模型來算出一個MFCC向量所對應的機率密度（probability density）。
+方法一：Gaussian mixture models，以MLE去估計參數
+方法二：HMM，考慮時序性
+
+
+1. 先對Training信號做端點偵測。之後再對Training信號做MFCC的Feature Engineering。
+2. 在Training信號上，以HMM且以Viterbi Algorithm進行處理，作為一個信號識別模型。
+3. 對Testing信號做端點偵測。在Testing信號上也做MFCC的Feature Engineering
+4. 接著以DTW計算Testing信號與信號識別模型的相似性
+5. 以DTW最高相似值的HMM模型作為其是別結果
+
+其中，
+(1) HMM作為信號數據的機率分布模型，詳細解釋參照pdf檔案
+(2) 以MFCC作為信號的預處理
+(3) DTW計算Testing信號和HMM的相似度。
