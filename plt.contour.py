@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier as RF
 clf = RF()
 clf.fit(X, y)
 
+resolution = 50
 dx = np.linspace(np.min(X[:, 0]), np.max(X[:, 0]), resolution)
 dy = np.linspace(np.min(X[:, 1]), np.max(X[:, 1]), resolution)
 dx, dy = np.meshgrid(dx, dy)
